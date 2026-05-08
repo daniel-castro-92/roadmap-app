@@ -57,5 +57,3 @@ export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
 
-// Next.js 16 also accepts the old name as an alias
-export { proxy as middleware };
