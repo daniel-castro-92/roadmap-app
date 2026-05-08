@@ -27,7 +27,9 @@ function formatDeadline(dateStr: string): string {
 
 export function TaskRow({ task, milestoneId, onCycleStatus, onUpdateTask, onDeleteTask }: TaskRowProps) {
   const [editingTitle, setEditingTitle] = useState(false);
+  const [editingNotes, setEditingNotes] = useState(false);
   const [title, setTitle] = useState(task.title);
+  const [notes, setNotes] = useState(task.notes);
   const isDone = task.status === "done";
 
   const saveTitle = () => {
@@ -35,6 +37,11 @@ export function TaskRow({ task, milestoneId, onCycleStatus, onUpdateTask, onDele
     if (trimmed) onUpdateTask(milestoneId, task.id, { title: trimmed });
     else setTitle(task.title);
     setEditingTitle(false);
+  };
+
+  const saveNotes = () => {
+    onUpdateTask(milestoneId, task.id, { notes: notes.trim() });
+    setEditingNotes(false);
   };
 
   const isOverdue = task.deadline
@@ -103,10 +110,27 @@ export function TaskRow({ task, milestoneId, onCycleStatus, onUpdateTask, onDele
             </div>
           )}
 
-          {/* 3. Notes — always shown if exists, never hidden */}
-          {task.notes && (
-            <p className="mt-0.5 leading-snug truncate" style={{ fontSize: "12px", color: "#4A5568" }}>
-              {task.notes}
+          {/* 3. Notes — always visible, click to edit */}
+          {editingNotes ? (
+            <textarea
+              autoFocus
+              rows={2}
+              className="w-full mt-0.5 outline-none resize-none border-b bg-transparent leading-snug"
+              style={{ fontSize: "12px", color: "#4A5568", borderColor: "#F05A1A" }}
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              onBlur={saveNotes}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") { setNotes(task.notes); setEditingNotes(false); }
+              }}
+            />
+          ) : (
+            <p
+              className="mt-0.5 leading-snug truncate cursor-text"
+              style={{ fontSize: "12px", color: notes ? "#4A5568" : "#CBD5E0" }}
+              onClick={() => setEditingNotes(true)}
+            >
+              {notes || "type notes…"}
             </p>
           )}
 
