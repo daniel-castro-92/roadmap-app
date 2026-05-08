@@ -5,6 +5,7 @@ export interface Task {
   title: string;
   status: Status;
   notes: string;
+  link?: string;
   order: number;
 }
 

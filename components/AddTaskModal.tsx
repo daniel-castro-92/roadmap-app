@@ -6,7 +6,7 @@ import { Milestone } from "@/lib/types";
 interface AddTaskModalProps {
   milestones: Milestone[];
   defaultMilestoneId?: string;
-  onAdd: (milestoneId: string, title: string, notes: string) => void;
+  onAdd: (milestoneId: string, title: string, notes: string, link: string) => void;
   onClose: () => void;
 }
 
@@ -18,6 +18,7 @@ export function AddTaskModal({
 }: AddTaskModalProps) {
   const [title, setTitle] = useState("");
   const [notes, setNotes] = useState("");
+  const [link, setLink] = useState("");
   const [milestoneId, setMilestoneId] = useState(
     defaultMilestoneId ?? milestones[0]?.id ?? ""
   );
@@ -30,7 +31,7 @@ export function AddTaskModal({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !milestoneId) return;
-    onAdd(milestoneId, title.trim(), notes.trim());
+    onAdd(milestoneId, title.trim(), notes.trim(), link.trim());
   };
 
   return (
@@ -52,16 +53,11 @@ export function AddTaskModal({
               value={milestoneId}
               onChange={(e) => setMilestoneId(e.target.value)}
               required
-              className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2"
-              style={{
-                borderColor: "#CBD5E0",
-                color: "#0F2240",
-              }}
+              className="w-full rounded-lg border px-3 py-2 text-sm outline-none"
+              style={{ borderColor: "#CBD5E0", color: "#0F2240" }}
             >
               {milestones.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.title}
-                </option>
+                <option key={m.id} value={m.id}>{m.title}</option>
               ))}
             </select>
           </div>
@@ -76,21 +72,35 @@ export function AddTaskModal({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="What needs to be done?"
               required
-              className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2"
+              className="w-full rounded-lg border px-3 py-2 text-sm outline-none"
               style={{ borderColor: "#CBD5E0", color: "#0F2240" }}
             />
           </div>
 
           <div>
             <label className="block text-xs font-semibold mb-1" style={{ color: "#4A5568" }}>
-              NOTES (optional)
+              NOTES <span style={{ color: "#CBD5E0" }}>(optional)</span>
             </label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Any additional context…"
-              rows={3}
+              rows={2}
               className="w-full rounded-lg border px-3 py-2 text-sm outline-none resize-none"
+              style={{ borderColor: "#CBD5E0", color: "#0F2240" }}
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold mb-1" style={{ color: "#4A5568" }}>
+              LINK <span style={{ color: "#CBD5E0" }}>(optional)</span>
+            </label>
+            <input
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+              placeholder="https://…"
+              type="url"
+              className="w-full rounded-lg border px-3 py-2 text-sm outline-none"
               style={{ borderColor: "#CBD5E0", color: "#0F2240" }}
             />
           </div>

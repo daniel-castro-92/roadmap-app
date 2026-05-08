@@ -65,13 +65,14 @@ export default function Home() {
     });
   };
 
-  const handleAddTask = (milestoneId: string, title: string, notes: string) => {
+  const handleAddTask = (milestoneId: string, title: string, notes: string, link: string) => {
     if (!data) return;
     const task: Task = {
       id: crypto.randomUUID(),
       title,
       status: "todo",
       notes,
+      link: link || undefined,
       order:
         data.milestones.find((m) => m.id === milestoneId)?.tasks.length ?? 0,
     };
