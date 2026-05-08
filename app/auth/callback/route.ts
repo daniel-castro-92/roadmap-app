@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
   const { error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
-    return NextResponse.redirect(`${origin}/login?error=auth_error`);
+    return NextResponse.redirect(`${origin}/login?error=auth_error&msg=${encodeURIComponent(error.message)}`);
   }
 
   // Middleware will check the email allowlist on the next request

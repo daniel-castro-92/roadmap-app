@@ -70,7 +70,7 @@ function LoginContent() {
             className="mb-5 px-4 py-3 rounded-xl text-sm text-center"
             style={{ backgroundColor: "rgba(240,90,26,0.15)", color: "#F05A1A" }}
           >
-            Something went wrong. Please try again.
+            Something went wrong: {searchParams.get("msg") || "Please try again."}
           </div>
         )}
 
