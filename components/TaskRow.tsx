@@ -393,10 +393,16 @@ export function TaskRow({ task, milestoneId, onCycleStatus, onUpdateTask, onDele
             ref={calBtnRef}
             onClick={() => setShowDatePicker(p => !p)}
             title="Set deadline"
-            className="p-1 rounded hover:opacity-60 transition-opacity"
-            style={{ color: task.deadline ? deadlineColor(task.deadline) : "#CBD5E0" }}
+            className="flex items-center justify-center rounded-lg transition-colors"
+            style={{
+              width: 30, height: 30,
+              color: task.deadline ? deadlineColor(task.deadline) : "#94A3B8",
+              backgroundColor: task.deadline ? deadlineColor(task.deadline) + "15" : "transparent",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = task.deadline ? deadlineColor(task.deadline) + "25" : "#F1F5F9")}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = task.deadline ? deadlineColor(task.deadline) + "15" : "transparent")}
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <rect x="3" y="4" width="18" height="18" rx="2" />
               <line x1="16" y1="2" x2="16" y2="6" />
               <line x1="8" y1="2" x2="8" y2="6" />
@@ -408,10 +414,12 @@ export function TaskRow({ task, milestoneId, onCycleStatus, onUpdateTask, onDele
           <button
             onClick={() => onDeleteTask(milestoneId, task.id)}
             title="Delete task"
-            className="p-1 rounded hover:opacity-60 transition-opacity"
-            style={{ color: "#CBD5E0" }}
+            className="flex items-center justify-center rounded-lg transition-colors"
+            style={{ width: 30, height: 30, color: "#94A3B8" }}
+            onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#FEF2F2"; e.currentTarget.style.color = "#EF4444"; }}
+            onMouseLeave={e => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = "#94A3B8"; }}
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
           </button>
