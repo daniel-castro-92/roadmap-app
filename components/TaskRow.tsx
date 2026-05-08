@@ -12,32 +12,46 @@ interface TaskRowProps {
   onDeleteTask: (milestoneId: string, taskId: string) => void;
 }
 
-export function TaskRow({
-  task,
-  milestoneId,
-  onCycleStatus,
-  onUpdateTask,
-  onDeleteTask,
-}: TaskRowProps) {
+function formatDeadline(dateStr: string): string {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diff = Math.round((date.getTime() - today.getTime()) / 86400000);
+  const label = date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  if (diff < 0) return `${label} · overdue`;
+  if (diff === 0) return `${label} · today`;
+  if (diff === 1) return `${label} · tomorrow`;
+  return `${label} · ${diff}d`;
+}
+
+export function TaskRow({ task, milestoneId, onCycleStatus, onUpdateTask, onDeleteTask }: TaskRowProps) {
   const [editingTitle, setEditingTitle] = useState(false);
   const [title, setTitle] = useState(task.title);
+  const isDone = task.status === "done";
 
   const saveTitle = () => {
-    if (title.trim()) onUpdateTask(milestoneId, task.id, { title: title.trim() });
+    const trimmed = title.trim();
+    if (trimmed) onUpdateTask(milestoneId, task.id, { title: trimmed });
     else setTitle(task.title);
     setEditingTitle(false);
   };
 
-  const isDone = task.status === "done";
+  const isOverdue = task.deadline
+    ? (() => {
+        const [y, m, d] = task.deadline.split("-").map(Number);
+        const due = new Date(y, m - 1, d);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return due < today;
+      })()
+    : false;
 
   return (
-    <div
-      className="rounded-lg border px-3 py-2.5"
-      style={{ backgroundColor: "white", borderColor: "#E2E8F0" }}
-    >
-      {/* Main row: status | title + link | delete */}
+    <div className="rounded-lg border px-3 py-2.5 bg-white" style={{ borderColor: "#E2E8F0" }}>
       <div className="flex items-start gap-2.5">
-        {/* Status pill — flex-shrink so it never wraps */}
+
+        {/* 1. Status pill */}
         <div className="flex-shrink-0 pt-0.5">
           <StatusBadge
             status={task.status}
@@ -45,12 +59,12 @@ export function TaskRow({
           />
         </div>
 
-        {/* Title + link */}
+        {/* 2. Title + link + notes + deadline */}
         <div className="flex-1 min-w-0">
           {editingTitle ? (
             <input
               autoFocus
-              className="w-full text-sm font-medium outline-none border-b"
+              className="w-full text-sm font-medium outline-none border-b pb-0.5"
               style={{ color: "#0F2240", borderColor: "#F05A1A" }}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -62,25 +76,26 @@ export function TaskRow({
             />
           ) : (
             <div className="flex items-center gap-1.5 min-w-0">
-              <p
-                className="text-sm font-medium truncate cursor-default select-none"
+              <span
+                className="text-sm font-medium truncate"
                 style={{
                   color: "#0F2240",
                   textDecoration: isDone ? "line-through" : "none",
-                  opacity: isDone ? 0.5 : 1,
+                  opacity: isDone ? 0.45 : 1,
+                  cursor: "default",
                 }}
                 onDoubleClick={() => setEditingTitle(true)}
               >
                 {task.title}
-              </p>
+              </span>
+              {/* 4. Link arrow — only if link exists */}
               {task.link && (
                 <a
                   href={task.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-shrink-0 text-xs font-semibold transition-opacity hover:opacity-70"
+                  className="flex-shrink-0 text-xs font-bold hover:opacity-60 transition-opacity"
                   style={{ color: "#F05A1A" }}
-                  title={task.link}
                 >
                   ↗
                 </a>
@@ -88,13 +103,24 @@ export function TaskRow({
             </div>
           )}
 
-          {/* Notes subtitle — always visible when note exists */}
-          {task.notes && !editingTitle && (
+          {/* 3. Notes — always shown if exists, never hidden */}
+          {task.notes && (
+            <p className="mt-0.5 leading-snug truncate" style={{ fontSize: "12px", color: "#4A5568" }}>
+              {task.notes}
+            </p>
+          )}
+
+          {/* Deadline */}
+          {task.deadline && (
             <p
               className="mt-0.5 leading-snug"
-              style={{ fontSize: "12px", color: "#4A5568" }}
+              style={{
+                fontSize: "11px",
+                fontWeight: 600,
+                color: isOverdue ? "#E53E3E" : "#4A5568",
+              }}
             >
-              {task.notes}
+              📅 {formatDeadline(task.deadline)}
             </p>
           )}
         </div>
@@ -103,13 +129,14 @@ export function TaskRow({
         <button
           onClick={() => onDeleteTask(milestoneId, task.id)}
           title="Delete task"
-          className="flex-shrink-0 p-1 rounded transition-opacity hover:opacity-70"
+          className="flex-shrink-0 p-1 rounded hover:opacity-60 transition-opacity"
           style={{ color: "#CBD5E0" }}
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
           </svg>
         </button>
+
       </div>
     </div>
   );

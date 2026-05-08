@@ -6,6 +6,7 @@ export interface Task {
   status: Status;
   notes: string;
   link?: string;
+  deadline?: string; // YYYY-MM-DD
   order: number;
 }
 

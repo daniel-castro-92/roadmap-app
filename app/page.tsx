@@ -65,7 +65,7 @@ export default function Home() {
     });
   };
 
-  const handleAddTask = (milestoneId: string, title: string, notes: string, link: string) => {
+  const handleAddTask = (milestoneId: string, title: string, notes: string, link: string, deadline: string) => {
     if (!data) return;
     const task: Task = {
       id: crypto.randomUUID(),
@@ -73,6 +73,7 @@ export default function Home() {
       status: "todo",
       notes,
       link: link || undefined,
+      deadline: deadline || undefined,
       order:
         data.milestones.find((m) => m.id === milestoneId)?.tasks.length ?? 0,
     };
