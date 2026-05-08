@@ -34,9 +34,16 @@ export function MilestoneCard({
 }: MilestoneCardProps) {
   const [collapsed, setCollapsed] = useState(false);
   const pct = progress(milestone.tasks);
-  const sorted = [...milestone.tasks].sort(
-    (a, b) => statusOrder[a.status] - statusOrder[b.status] || a.order - b.order
-  );
+  const sorted = [...milestone.tasks].sort((a, b) => {
+    // Deadline sort: earlier first, no deadline last
+    const aD = a.deadline ?? null;
+    const bD = b.deadline ?? null;
+    if (aD && bD) return aD < bD ? -1 : aD > bD ? 1 : 0;
+    if (aD) return -1;
+    if (bD) return 1;
+    // Fallback: status then insertion order
+    return statusOrder[a.status] - statusOrder[b.status] || a.order - b.order;
+  });
 
   return (
     <div
