@@ -20,3 +20,11 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+button,
+a,
+[role="button"],
+select,
+label[for] {
+  cursor: pointer;
+}
