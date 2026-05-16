@@ -51,7 +51,7 @@ export function MilestoneCard({
       style={{ backgroundColor: "white", border: "1px solid #E2E8F0" }}
     >
       {/* Milestone header */}
-      <div style={{ backgroundColor: "#0F2240" }} className="px-4 py-3">
+      <div style={{ backgroundColor: "#00695C" }} className="px-4 py-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
@@ -76,7 +76,7 @@ export function MilestoneCard({
               </h2>
             </div>
             {milestone.description && (
-              <p className="text-sm mt-0.5 ml-6 opacity-70" style={{ color: "#F4F5F6" }}>
+              <p className="text-sm mt-0.5 ml-6" style={{ color: "rgba(255,255,255,0.6)" }}>
                 {milestone.description}
               </p>
             )}
@@ -91,7 +91,7 @@ export function MilestoneCard({
               onClick={onAddTask}
               title="Add task to this milestone"
               className="px-2.5 py-1 rounded text-xs font-semibold text-white transition-opacity hover:opacity-90"
-              style={{ backgroundColor: "#F05A1A" }}
+              style={{ backgroundColor: "#80CBC4" }}
             >
               + Task
             </button>
@@ -113,7 +113,7 @@ export function MilestoneCard({
             <div className="h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "rgba(255,255,255,0.15)" }}>
               <div
                 className="h-full rounded-full transition-all duration-500"
-                style={{ width: `${pct}%`, backgroundColor: "#F05A1A" }}
+                style={{ width: `${pct}%`, backgroundColor: "#80CBC4" }}
               />
             </div>
           </div>

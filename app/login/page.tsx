@@ -24,14 +24,14 @@ function LoginContent() {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4"
-      style={{ backgroundColor: "#0F2240" }}
+      style={{ backgroundColor: "#00695C" }}
     >
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="flex flex-col items-center mb-10 gap-3">
           <div
             className="w-14 h-14 rounded-xl flex items-center justify-center"
-            style={{ backgroundColor: "#F05A1A" }}
+            style={{ backgroundColor: "#00897B" }}
           >
             <svg
               width="26"
@@ -60,7 +60,7 @@ function LoginContent() {
         {error === "unauthorized" && (
           <div
             className="mb-5 px-4 py-3 rounded-xl text-sm text-center"
-            style={{ backgroundColor: "rgba(240,90,26,0.15)", color: "#F05A1A" }}
+            style={{ backgroundColor: "rgba(0,137,123,0.18)", color: "#80CBC4" }}
           >
             That Google account isn&apos;t on the access list. Try a different account.
           </div>
@@ -68,7 +68,7 @@ function LoginContent() {
         {error === "auth_error" && (
           <div
             className="mb-5 px-4 py-3 rounded-xl text-sm text-center"
-            style={{ backgroundColor: "rgba(240,90,26,0.15)", color: "#F05A1A" }}
+            style={{ backgroundColor: "rgba(0,137,123,0.18)", color: "#80CBC4" }}
           >
             Something went wrong: {searchParams.get("msg") || "Please try again."}
           </div>
@@ -79,7 +79,7 @@ function LoginContent() {
           onClick={handleGoogleLogin}
           disabled={loading}
           className="w-full flex items-center justify-center gap-3 py-3.5 rounded-xl text-sm font-semibold transition-all disabled:opacity-60"
-          style={{ backgroundColor: "white", color: "#0F2240" }}
+          style={{ backgroundColor: "white", color: "#00695C" }}
         >
           {/* Google G icon */}
           <svg width="18" height="18" viewBox="0 0 48 48">

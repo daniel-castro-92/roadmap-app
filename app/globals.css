@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --navy: #0F2240;
-  --orange: #F05A1A;
+  --navy: #00695C;
+  --orange: #80CBC4;
   --offwhite: #F4F5F6;
   --slate: #4A5568;
 }

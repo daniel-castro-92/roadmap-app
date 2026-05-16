@@ -14,9 +14,9 @@ const CONFIG: Record<
   },
   wip: {
     label: "WIP",
-    bg: "#FFF3EC",
-    text: "#F05A1A",
-    dot: "#F05A1A",
+    bg: "#E0F2F1",
+    text: "#00695C",
+    dot: "#00695C",
   },
   done: {
     label: "Done",

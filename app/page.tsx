@@ -145,7 +145,7 @@ export default function Home() {
           <div
             className="w-8 h-8 rounded-full animate-spin"
             style={{
-              border: "3px solid #F05A1A",
+              border: "3px solid #80CBC4",
               borderTopColor: "transparent",
             }}
           />
@@ -169,7 +169,7 @@ export default function Home() {
         {error && (
           <div
             className="mb-4 p-3 rounded-lg text-sm text-white flex items-center justify-between"
-            style={{ backgroundColor: "#F05A1A" }}
+            style={{ backgroundColor: "#00897B" }}
           >
             <span>{error}</span>
             <button
@@ -185,7 +185,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
             <div
               className="w-16 h-16 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: "#0F2240" }}
+              style={{ backgroundColor: "#00695C" }}
             >
               <svg
                 width="28"
@@ -202,7 +202,7 @@ export default function Home() {
                 />
               </svg>
             </div>
-            <h2 className="text-xl font-semibold" style={{ color: "#0F2240" }}>
+            <h2 className="text-xl font-semibold" style={{ color: "#00695C" }}>
               No milestones yet
             </h2>
             <p className="text-sm" style={{ color: "#4A5568" }}>
@@ -211,7 +211,7 @@ export default function Home() {
             <button
               onClick={() => setShowAddMilestone(true)}
               className="px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              style={{ backgroundColor: "#F05A1A" }}
+              style={{ backgroundColor: "#80CBC4" }}
             >
               Add Milestone
             </button>

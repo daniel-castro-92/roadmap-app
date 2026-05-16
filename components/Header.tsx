@@ -10,13 +10,13 @@ export function Header({ saving, onAddTask, onAddMilestone }: HeaderProps) {
   return (
     <header
       className="sticky top-0 z-20 shadow-sm"
-      style={{ backgroundColor: "#0F2240" }}
+      style={{ backgroundColor: "#00695C" }}
     >
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div
             className="w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0"
-            style={{ backgroundColor: "#F05A1A" }}
+            style={{ backgroundColor: "#00897B" }}
           >
             <svg
               width="16"
@@ -46,14 +46,14 @@ export function Header({ saving, onAddTask, onAddMilestone }: HeaderProps) {
           <button
             onClick={onAddMilestone}
             className="px-3 py-1.5 rounded-md text-sm font-medium border transition-all hover:opacity-80"
-            style={{ borderColor: "rgba(255,255,255,0.3)", color: "white" }}
+            style={{ borderColor: "rgba(255,255,255,0.5)", color: "white" }}
           >
             + Milestone
           </button>
           <button
             onClick={onAddTask}
             className="px-3 py-1.5 rounded-md text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ backgroundColor: "#F05A1A" }}
+            style={{ backgroundColor: "#80CBC4" }}
           >
             + Task
           </button>
