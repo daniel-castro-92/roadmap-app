@@ -9,8 +9,14 @@ const ALLOWED_EMAILS = (process.env.ALLOWED_EMAILS ?? "")
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Always allow the auth callback and login page through
-  if (pathname.startsWith("/auth/callback") || pathname === "/login") {
+  // Always allow the auth callback, login page, and PWA static files through
+  if (
+    pathname.startsWith("/auth/callback") ||
+    pathname === "/login" ||
+    pathname === "/manifest.json" ||
+    pathname === "/sw.js" ||
+    pathname.startsWith("/icons/")
+  ) {
     return NextResponse.next();
   }
 
@@ -54,6 +60,6 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon\\.ico|manifest\\.json|sw\\.js|icons/).*)" ],
 };
 
